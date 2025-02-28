@@ -1,24 +1,54 @@
 package com.example.registrodecontactos;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private ContactAdapter contactAdapter;
+    private ContactDatabaseHelper db;
+    private Button btnAddContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        db = new ContactDatabaseHelper(this);
+        recyclerView = findViewById(R.id.recyclerView);
+        btnAddContact = findViewById(R.id.btnAddContact);
+
+        // Configuración del RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Cargar contactos en la lista
+        loadContacts();
+
+        // Evento para el botón de agregar contacto
+        btnAddContact.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+            startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadContacts(); // Recargar la lista cuando regrese de agregar un contacto
+    }
+
+    private void loadContacts() {
+        List<Contact> contacts = db.getAllContacts();
+        contactAdapter = new ContactAdapter(contacts);
+        recyclerView.setAdapter(contactAdapter);
     }
 }
