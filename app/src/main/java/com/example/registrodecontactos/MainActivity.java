@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,13 +26,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         btnAddContact = findViewById(R.id.btnAddContact);
 
-        // Configuración del RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Cargar contactos en la lista
         loadContacts();
 
-        // Evento para el botón de agregar contacto
         btnAddContact.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
             startActivity(intent);
@@ -48,7 +45,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadContacts() {
         List<Contact> contacts = db.getAllContacts();
-        contactAdapter = new ContactAdapter(contacts);
+        contactAdapter = new ContactAdapter(contacts, this::confirmarEliminacion);
         recyclerView.setAdapter(contactAdapter);
+    }
+
+    private void confirmarEliminacion(int contactId, int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmar eliminación")
+                .setMessage("¿Seguro que deseas eliminar este contacto?")
+                .setPositiveButton("Sí", (dialog, which) -> eliminarContacto(contactId, position))
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void eliminarContacto(int contactId, int position) {
+        db.deleteContact(contactId);
+        contactAdapter.eliminarContacto(position);
     }
 }

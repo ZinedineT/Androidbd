@@ -8,44 +8,40 @@
     android:background="@drawable/fondo"
     tools:context=".MainActivity">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryVariant"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:text="REGISTRO DE CONTACTO"
+        android:textColor="@color/white"
+        android:textSize="23dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="REGISTRO DE CONTACTOS"
-        app:titleTextColor="@android:color/background_light" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnAddContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/black"
         android:padding="10dp"
         android:text="Agregar Contacto"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"/>
+        android:layout_marginTop="10dp"/>
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/btnAddContact"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

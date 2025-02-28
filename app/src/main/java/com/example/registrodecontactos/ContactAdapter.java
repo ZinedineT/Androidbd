@@ -3,6 +3,8 @@ package com.example.registrodecontactos;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,9 +13,11 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private List<Contact> contactList;
+    private OnDeleteClickListener onDeleteClickListener; // Agregar interfaz para eliminar
 
-    public ContactAdapter(List<Contact> contactList) {
+    public ContactAdapter(List<Contact> contactList, OnDeleteClickListener onDeleteClickListener) {
         this.contactList = contactList;
+        this.onDeleteClickListener = onDeleteClickListener;
     }
 
     @NonNull
@@ -28,6 +32,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         Contact contact = contactList.get(position);
         holder.tvName.setText(contact.getNombre());
         holder.tvPhone.setText(contact.getTelefono());
+
+        // Evento para eliminar
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onDeleteClick(contact.getId(), position);
+            }
+        });
     }
 
     @Override
@@ -35,18 +46,25 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return contactList.size();
     }
 
-    public void actualizarLista(List<Contact> nuevaLista) {
-        this.contactList = nuevaLista;
-        notifyDataSetChanged();
+    public void eliminarContacto(int position) {
+        contactList.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvPhone;
+        ImageButton btnDelete;
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvPhone = itemView.findViewById(R.id.tvPhone);
+            btnDelete = itemView.findViewById(R.id.deletebutton); // Asegurar que se encuentre el botón
         }
+    }
+
+    // Interfaz para manejar la eliminación
+    public interface OnDeleteClickListener {
+        void onDeleteClick(int contactId, int position);
     }
 }

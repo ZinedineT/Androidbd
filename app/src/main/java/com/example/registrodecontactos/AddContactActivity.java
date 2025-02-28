@@ -41,7 +41,6 @@ public class AddContactActivity extends AppCompatActivity {
         values.put("telefono", phone);
         long newRowId = db.insertContact(values);
 
-        db.insertContact(values);
         Toast.makeText(this, "Contacto guardado", Toast.LENGTH_SHORT).show();
         finish(); // Cierra la actividad y vuelve a MainActivity
     }

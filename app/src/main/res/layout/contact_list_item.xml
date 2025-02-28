@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -10,31 +11,61 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
             android:text="Nombre del contacto"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
             android:text="Teléfono"
-            android:textSize="16sp"
             android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintVertical_bias="0.55" />
+
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:contentDescription="Editar contacto"/>
+
+        <ImageButton
+            android:id="@+id/deletebutton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editButton"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:contentDescription="Eliminar contacto"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
